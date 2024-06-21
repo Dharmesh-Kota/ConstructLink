@@ -1,0 +1,36 @@
+<title><%=title%></title>
+<link rel="stylesheet" href="/css/project.css">
+
+<!-- Project Discription -->
+<div id="project-section">
+    <div class="project-image">
+        <img src="<%=project.avatar%>" alt="Project Image" height="300" width="500">
+    </div>
+    <div class="project-details">
+        <div class="project-name">
+            <p><%=project.name%></p>
+        </div>
+        <div class="project-budget">
+            <%=project.budget%>
+        </div>
+        <div class="project-client">
+            <%=project.client%>
+        </div>
+        <div class="project-location">
+            <%=project.location%>
+        </div>
+        <div class="project-description">
+            <%=project.description%>
+        </div>
+    </div>
+</div>
+
+<!-- Project Images -->
+<%- include('./project_updates.ejs', {project: project, updates: updates, mode: mode})%>
+
+<!-- Comments Section -> Can be Entered by the Clients Only -->
+<%- include('./comments.ejs', {project: project, mode: mode, comments: comments})%>
+
+<div id="material-management">
+    <a href="/functionality/material-management">Material Management</a>
+</div>

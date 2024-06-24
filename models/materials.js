@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 // const path = require('path');
 
 const materialScehma = new mongoose.Schema({
+    project_name: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true

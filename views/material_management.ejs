@@ -4,6 +4,7 @@
 <div id="material-management">
     <% if(locals.user.role == 'builder') { %>
         <form action="/functionality/add_material" method="post">
+            <input type="text" name="project_name" id="project_name" value="<%=project%>" hidden>
             <div id="material-name" class="materials">
                 <label for="material-name">Material Name</label>
                 <input type="text" name="name" id="material-name" placeholder="Material Name">

@@ -28,7 +28,20 @@ module.exports.update = function(req, res){
 // Rendering the Community Page
 module.exports.community_engagement = async function(req, res){
 
-    let projects = await Project.find({}).exec();
+    let projects;
+    if(req.user.role == 'builder'){
+        projects = await Project.find({builder: req.user.company}).exec();
+    } else if(req.user.role == 'client'){
+        projects = await Project.find({
+            $or: [
+                { client: req.user.company },
+                { client: req.user.username },
+                { client: req.user.name }
+            ]
+        }).exec();
+    } else {
+        projects = await Project.find({name: req.user.company}).exec();
+    }
 
     return res.render('community_engagement', {
         title: "ConstructLink | Community Engagement",

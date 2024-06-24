@@ -23,6 +23,7 @@ module.exports.new_project = function(req, res){
             budget: req.body.budget,
             client: req.body.client,
             builder: req.body.builder,
+            location: req.body.location,
             description: req.body.description,
             avatar: Project.avatarPath + '/' + req.file.filename
         });
@@ -36,19 +37,9 @@ module.exports.new_project = function(req, res){
 module.exports.portfolio = async function(req, res){
     try{
         let project;
-        // Check if builder is logged in
         if(req.user.role == 'builder'){
-            project = await Project.find({
-                $or: [
-                    { builder: req.user.company },
-                    { builder: req.user.username },
-                    { builder: req.user.name }
-                ]
-            }).exec();
-        }
-
-        // Check if client is logged in
-        if(req.user.role == 'client'){
+            project = await Project.find({builder: req.user.company}).exec();
+        } else if(req.user.role == 'client'){
             project = await Project.find({
                 $or: [
                     { client: req.user.company },
@@ -101,11 +92,12 @@ module.exports.material_management = async function(req, res){
 
     try {
         
-        let materials = await Material.find({}).sort('-createdAt');
+        let materials = await Material.find({project_name: req.params.project}).sort('-createdAt');
         
         return res.render('material_management', {
             title: "Material Management",
-            materials: materials
+            materials: materials,
+            project: req.params.project
         });
 
     } catch (error) {
@@ -120,6 +112,7 @@ module.exports.add_material = async function(req, res){
     try {
         
         await Material.create({
+            project_name: req.body.project_name,
             name: req.body.name,
             quantity: req.body.quantity,
             price: req.body.price,

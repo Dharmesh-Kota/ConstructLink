@@ -38,7 +38,6 @@
         newCommentForm.submit(function(e){
             e.preventDefault();
             $.ajax({
-
                 type: 'post',
                 url: '/project/comments/create',
                 data: newCommentForm.serialize(),
@@ -78,6 +77,5 @@
                 </li>`);
     }
 
-    console.log('Entered');
     createComment();
 }

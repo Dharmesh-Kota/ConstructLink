@@ -3,8 +3,11 @@
 const express = require('express');
 const app = express();
 
+// importing the dotenv package
+const dotenv = require('dotenv').config();
+
 // decalring the local server port or the Render port
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
 // providing https server for Render
 const httpsRedirect = require('express-https-redirect');
@@ -86,7 +89,7 @@ app.use(session({
     },
     // storing the cookie-data in mongo db
     store: MongoStore.create({
-        mongoUrl: process.env.MONGOURL || 'mongodb://127.0.0.1:27017/hackout-rodic',
+        mongoUrl: process.env.MONGO_URL,
         autoRemove: 'disabled'
     }, function(err){
         console.log(err || 'connect-mongo setup ok!!');
